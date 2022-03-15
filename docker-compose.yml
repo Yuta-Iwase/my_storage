@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - ${API_PORT}:${API_PORT}
+      - ${CONSOLE_PORT}:${CONSOLE_PORT}
+    environment:
+      - MINIO_ACCESS_KEY=${ID}
+      - MINIO_SECRET_KEY=${PW}
+    entrypoint: ['minio', 'server', '/data', '--address', ':${API_PORT}', '--console-address', ':${CONSOLE_PORT}']
+    volumes:
+      - ./data:/data
